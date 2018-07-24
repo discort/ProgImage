@@ -14,13 +14,6 @@ DB_NAME = os.environ.get('DB_NAME')
 
 routers = web.RouteTableDef()
 
-import logging
-LOG_FILENAME = 'storage.log'
-logging.basicConfig(
-    filename=LOG_FILENAME,
-    level=logging.DEBUG,
-)
-
 
 def base64_encode(data):
     return base64.b64encode(data).decode('utf-8')

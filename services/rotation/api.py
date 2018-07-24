@@ -9,14 +9,7 @@ from image_processing.handlers import ImageRotator
 
 routers = web.RouteTableDef()
 
-
 STORAGE_API_URL = 'http://storage_api:8080'
-import logging
-LOG_FILENAME = 'rotation.log'
-logging.basicConfig(
-    filename=LOG_FILENAME,
-    level=logging.DEBUG,
-)
 
 
 def base64_encode(data):
