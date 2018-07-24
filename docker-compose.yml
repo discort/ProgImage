@@ -1,0 +1,44 @@
+version: '3'
+services:
+  mongodb:
+    restart: always
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/var/app
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - .:/var/app
+    ports:
+      - 27017:27017
+  
+  storage_api:
+    restart: always
+    build:
+      context: .
+      dockerfile: storage.Dockerfile
+    ports:
+     - 8080:8080
+    environment:
+      DB_NAME: images_db
+    depends_on:
+      - mongodb
+
+  rotation:
+    restart: always
+    build:
+      context: .
+      dockerfile: rotation.Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - storage_api
+
+  resizing:
+    restart: always
+    build:
+      context: .
+      dockerfile: resizing.Dockerfile
+    ports:
+      - 8082:8082
+    depends_on:
+      - storage_api
